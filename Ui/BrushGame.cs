@@ -35,7 +35,7 @@ namespace falling_sand.Ui {
                         Element? erasedElem = Element.GetElementByCoords(pos.X + x, pos.Y + y);
                         if (Tool == GameTool.Brush && !Element.IsEmptySpace(pos.X + x, pos.Y + y)) {
                             if (!brushReplaces) continue;
-                            if (erasedElem == null) continue; // that means its a wall
+                            if (erasedElem == null || Element.IsWall(pos.X+x, pos.Y+y)) continue;
                             erasedElem.Destroy();
                         }
                         if (Tool == GameTool.Eraser) {
