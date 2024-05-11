@@ -1,2 +1,3 @@
 # Falling sand
-idk
+Falling sand simulator
+Idk what else to say
