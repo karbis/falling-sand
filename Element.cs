@@ -83,12 +83,17 @@ namespace falling_sand {
                         steps = 0;
                         continue;
                     }
-                    if (IsEmptySpaceFrom(steps, 1)) {
+                    Element? elem5 = GetElementFrom(steps, 0);
+                    if (IsEmptySpaceFrom(steps, 1) && (elem5 != null && elem5.Name == Name)) {
                         Move(steps, 0);
+                        Move(0, 1);
+                        break; // makes deleting water look cooler
+                    }
+                    if (IsEmptySpaceFrom(steps, 1)) {
+                        Move(steps, 1);
                         break;
                     }
                 }
-                Move(0, 1);
                 // liquid physics
             } else if (elem2 != null && !isFalling()) {
                 if (IsEmptySpaceFrom(1, 0) && IsEmptySpaceFrom(1, 1)) {

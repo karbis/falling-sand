@@ -32,10 +32,11 @@ namespace falling_sand.Ui {
                 Point pos = GetHoveringPoint(currentMousePos);
                 for (int x = 0; x < BrushSize; x++) {
                     for (int y = 0; y < BrushSize; y++) {
+                        if (Element.IsWall(pos.X + x, pos.Y + y)) continue;
                         Element? erasedElem = Element.GetElementByCoords(pos.X + x, pos.Y + y);
                         if (Tool == GameTool.Brush && !Element.IsEmptySpace(pos.X + x, pos.Y + y)) {
                             if (!brushReplaces) continue;
-                            if (erasedElem == null || Element.IsWall(pos.X+x, pos.Y+y)) continue;
+                            if (erasedElem == null) continue;
                             erasedElem.Destroy();
                         }
                         if (Tool == GameTool.Eraser) {
