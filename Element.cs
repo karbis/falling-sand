@@ -167,6 +167,8 @@ namespace falling_sand {
                 if (IsEmptySpaceFrom(0, i)) return true;
                 Element? elem = GetElementFrom(0, i);
                 if (elem == null) return true;
+                Element? elem2 = GetElementFrom(0, i + 1);
+                if (elem.Gravity && elem2 != null && !elem2.Gravity) return true;
                 if (!elem.Gravity) return false;
                 i++;
             }

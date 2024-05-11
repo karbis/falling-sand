@@ -13,6 +13,7 @@ namespace falling_sand.Ui {
         //public static Element[] State = [];
         public static Size GameSize = new Size(30,30);
         public static bool Paused = false;
+        public static int TickRate = 30;
 
         public static void PaintElement(Graphics g, Element element, double scale = 16, int x = 0, int y = 0) {
             SolidBrush brush = new SolidBrush((element.ElementColorFunction != null) ? element.ElementColorFunction(x, y) : element.ElementColor);
@@ -49,7 +50,6 @@ namespace falling_sand.Ui {
             };
             DoubleBufferPanel(Canvas);
 
-            const int intendedFps = 30;
             int fps = 0;
 
             Timer timer = new Timer();
@@ -60,53 +60,51 @@ namespace falling_sand.Ui {
             stopwatch.Start();
 
             long lastElapsed = stopwatch.ElapsedMilliseconds;
+            double leftOverSeconds = 0;
             timer.Tick += (object? sender, EventArgs e) => {
-                if (stopwatch.ElapsedMilliseconds - lastElapsed < 1000d / intendedFps) return;
-                lastElapsed = (long)(Math.Floor(stopwatch.ElapsedMilliseconds/(1000d/intendedFps))*(1000d/intendedFps));
+                if (stopwatch.ElapsedMilliseconds - lastElapsed + leftOverSeconds < 1000d / TickRate) return;
                 if (Paused) {
                     Canvas.Invalidate();
                     return;
                 }
-                // snaps the lastElapsed variable to last frame, to not make it behind (too slow)
-                fps++;
+                leftOverSeconds += stopwatch.ElapsedMilliseconds - lastElapsed;
+                lastElapsed = stopwatch.ElapsedMilliseconds;
+
+                int updateAmount = (int)(leftOverSeconds / 1000d * TickRate);
+                updateAmount = Math.Min(10, updateAmount);
+                if (updateAmount == 0) return;
+
+                fps += Math.Min(1, updateAmount);
 
                 Timer fpsTimer = new Timer();
                 fpsTimer.Interval = 1000;
                 fpsTimer.Start();
                 fpsTimer.Tick += (object? sender, EventArgs e) => {
                     if (Paused) return;
-                    fps--;
+                    fps -= Math.Min(1, updateAmount);
                     FallingSand.Form.FPSCounter.Text = "TPS: " + fps;
-                    fpsTimer.Stop();
                     fpsTimer.Dispose();
                 };
                 FallingSand.Form.FPSCounter.Text = "TPS: " + fps;
 
-                Update();
+                leftOverSeconds -= 1000d / TickRate * updateAmount;
+                Update(updateAmount);
+                if (leftOverSeconds > 500) {
+                    // too much time, reset
+                    leftOverSeconds = 0;
+                }
             };
-
-            /*Canvas.MouseClick += (object? sender, MouseEventArgs e) => {
-                double xScale = e.Location.X / (double)Canvas.Width;
-                double yScale = e.Location.Y / (double)Canvas.Height;
-                Point clickPoint = new Point((int)(xScale * StateSize.Width), (int)(yScale * StateSize.Height));
-
-                Element? elem = ListOfElements.List.Find(x => x.Name == SelectedElement.Name);
-                if (elem == null) return;
-                elem = (Element?)Activator.CreateInstance(elem.GetType());
-                if (elem == null) return;
-                elem.X = clickPoint.X;
-                elem.Y = clickPoint.Y;
-            };*/
-
         }
-        public static void Update() {
+        public static void Update(int updateAmount = 1) {
             List<Element?> shallowCopy = [];
             foreach (Element? elem in Element.SpatialMap) {
                 shallowCopy.Add(elem);
             }
             foreach (Element? elem in shallowCopy) {
                 if (elem == null) continue;
-                elem.Update();
+                for (int i = 0; i < updateAmount; i++) {
+                    elem.Update();
+                }
             }
             Canvas.Invalidate();
         }

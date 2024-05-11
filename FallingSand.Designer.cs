@@ -29,7 +29,7 @@
             FPSCounter = new Label();
             BottomBar = new Panel();
             BottomCenterBar = new Panel();
-            button5 = new Button();
+            SettingsButton = new Button();
             PlayButton = new Button();
             BrushSizeButton = new Button();
             ClearButton = new Button();
@@ -61,15 +61,14 @@
             // 
             // FPSCounter
             // 
-            FPSCounter.AutoSize = true;
             FPSCounter.BackColor = Color.Transparent;
             FPSCounter.Font = new Font("Consolas", 10F);
             FPSCounter.ForeColor = Color.Black;
-            FPSCounter.Location = new Point(376, 98);
+            FPSCounter.Location = new Point(360, 98);
             FPSCounter.Name = "FPSCounter";
-            FPSCounter.Size = new Size(64, 17);
+            FPSCounter.Size = new Size(80, 17);
             FPSCounter.TabIndex = 0;
-            FPSCounter.Text = "FPS: 30";
+            FPSCounter.Text = "TPS: 30";
             FPSCounter.TextAlign = ContentAlignment.TopRight;
             // 
             // BottomBar
@@ -84,7 +83,7 @@
             // BottomCenterBar
             // 
             BottomCenterBar.BackColor = SystemColors.Control;
-            BottomCenterBar.Controls.Add(button5);
+            BottomCenterBar.Controls.Add(SettingsButton);
             BottomCenterBar.Controls.Add(PlayButton);
             BottomCenterBar.Controls.Add(BrushSizeButton);
             BottomCenterBar.Controls.Add(ClearButton);
@@ -98,14 +97,14 @@
             BottomCenterBar.Size = new Size(450, 125);
             BottomCenterBar.TabIndex = 1;
             // 
-            // button5
+            // SettingsButton
             // 
-            button5.Image = Properties.Resources.SettingsIcon;
-            button5.Location = new Point(417, 38);
-            button5.Name = "button5";
-            button5.Size = new Size(23, 23);
-            button5.TabIndex = 8;
-            button5.UseVisualStyleBackColor = true;
+            SettingsButton.Image = Properties.Resources.SettingsIcon;
+            SettingsButton.Location = new Point(417, 38);
+            SettingsButton.Name = "SettingsButton";
+            SettingsButton.Size = new Size(23, 23);
+            SettingsButton.TabIndex = 8;
+            SettingsButton.UseVisualStyleBackColor = true;
             // 
             // PlayButton
             // 
@@ -210,11 +209,10 @@
         public Panel CanvasInput;
         public Label SelectedName;
         public Panel SelectedDisplayPanel;
-        private Button button2;
-        private Button button5;
         public Button BrushSizeButton;
         public Button ToolButton;
         public Button ClearButton;
         public Button PlayButton;
+        public Button SettingsButton;
     }
 }

@@ -33,7 +33,7 @@ namespace falling_sand.Ui
         public static void UpdateCanvas()
         {
             Size canvasAvailableRegion = GetCorrectedFormSize() - new Size(0, bg.Height);
-            double aspectRatio = 1d;
+            double aspectRatio = (double)Game.GameSize.Width/Game.GameSize.Height;
             double minSize = Math.Min(canvasAvailableRegion.Width, canvasAvailableRegion.Height);
             Size canvasSize = new Size();
             Point canvasPosition = new Point();

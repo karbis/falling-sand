@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace falling_sand.Ui {
     internal class Buttons {
         static FallingSand form = FallingSand.Form;
-        static int[] brushSizes = [1, 3, 5];
+        static int[] brushSizes = [1, 3, 5,7];
         static int brushIndex = 0;
         public static void Init() {
             IncrementBrushSize(0);
@@ -43,6 +43,12 @@ namespace falling_sand.Ui {
                 form.FPSCounter.Visible = !Game.Paused;
 
                 form.Canvas.Focus();
+            };
+
+            form.SettingsButton.MouseClick += (object? handler, MouseEventArgs e) => {
+                form.Canvas.Focus();
+                SettingsForm settings = new SettingsForm();
+                settings.ShowDialog(form);
             };
         }
 

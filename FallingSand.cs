@@ -8,9 +8,9 @@ namespace falling_sand
             Form = this;
             InitializeComponent();
             // init
+            Game.Init();
             Resizer.Init();
             ElementSelectorBar.FillElements(Elements);
-            Game.Init();
             BrushGame.Init();
             ElementSelection.UpdateAll();
             SelectedDisplayPanel.Update();
