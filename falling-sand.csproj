@@ -12,7 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
     <None Remove="icon.ico" />
+    <None Remove="README.md" />
   </ItemGroup>
 
   <ItemGroup>

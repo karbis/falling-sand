@@ -190,7 +190,7 @@
             Controls.Add(BottomBar);
             Controls.Add(Canvas);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(416, 189);
+            MinimumSize = new Size(466, 164);
             Name = "FallingSand";
             Text = "Falling sand";
             Canvas.ResumeLayout(false);

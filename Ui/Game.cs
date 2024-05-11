@@ -45,6 +45,7 @@ namespace falling_sand.Ui {
                     if (elem == null) continue;
                     PaintElement(e.Graphics, elem, (double)Canvas.Width / GameSize.Width, elem.X, elem.Y);
                 }
+                BrushGame.PaintOnBrush(e);
             };
             DoubleBufferPanel(Canvas);
 
@@ -61,8 +62,11 @@ namespace falling_sand.Ui {
             long lastElapsed = stopwatch.ElapsedMilliseconds;
             timer.Tick += (object? sender, EventArgs e) => {
                 if (stopwatch.ElapsedMilliseconds - lastElapsed < 1000d / intendedFps) return;
-                if (Paused) return;
                 lastElapsed = (long)(Math.Floor(stopwatch.ElapsedMilliseconds/(1000d/intendedFps))*(1000d/intendedFps));
+                if (Paused) {
+                    Canvas.Invalidate();
+                    return;
+                }
                 // snaps the lastElapsed variable to last frame, to not make it behind (too slow)
                 fps++;
 

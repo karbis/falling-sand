@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -53,13 +54,9 @@ namespace falling_sand {
             }
         }
         private void gravityUpdate() {
-            if (!IsEmptySpaceFrom(0,1)) {
+            if (!isFalling()) {
                 Element? underElement = GetElementFrom(0, 1);
                 if (underElement != null && !underElement.Gravity) return; // dont move if block under doesnt have gravity
-                if (underElement != null && underElement.Gravity && IsEmptySpaceFrom(0, 2)) {
-                    Move(0, 1); // if you are on top of a falling gravity block, dont move, fall anyways
-                    return;
-                }
                 // block under, move left / right
                 if (IsEmptySpaceFrom(1,1) && IsEmptySpaceFrom(1,0)) {
                     Move(1, 1);
@@ -73,35 +70,30 @@ namespace falling_sand {
         }
         private void liquidUpdate() {
             Element? elem2 = GetElementFrom(0, 1);
-            if (elem2 != null && elem2.Name == Name) {
+            if (elem2 != null && elem2.Name == Name && !isFalling()) {
                 int steps = 0;
                 int moveDir = -1;
                 bool moved = false;
                 while (true) {
-                    if (IsEmptySpaceFrom(0, 1)) break;
-                    if (!IsEmptySpaceFrom(moveDir, 0)) {
+                    steps += moveDir;
+                    Element? elem4 = GetElementFrom(steps, 1);
+                    if (IsWallFrom(steps, 1) || (elem4 != null && elem4.Name != Name)) {
                         if (moved) break;
-                        Move(-steps, 0);
+                        moved = true;
                         moveDir *= -1;
                         steps = 0;
-                        moved = true;
+                        continue;
                     }
-                    Element? elem4 = GetElementFrom(0, 1);
-                    if (elem4 != null && elem4.Name != Name) {
-                        Move(-steps, 0);
+                    if (IsEmptySpaceFrom(steps, 1)) {
+                        Move(steps, 1);
                         break;
                     }
-                    Move(moveDir, 0);
-                    steps += moveDir;
                 }
-                if (IsEmptySpaceFrom(0,1)) {
-                    Move(0, 1);
-                }
-                // if under a liquid object, attempt to move down to the liquid object by pushing other liquid objects to the left/right
-            } else if (elem2 != null && (!elem2.Gravity || IsEmptySpaceFrom(0,2))) {
-                if (IsEmptySpaceFrom(1,0) && IsEmptySpaceFrom(1,1)) {
+                // liquid physics
+            } else if (elem2 != null && !isFalling()) {
+                if (IsEmptySpaceFrom(1, 0) && IsEmptySpaceFrom(1, 1)) {
                     Move(1, 1);
-                } else if (IsEmptySpaceFrom(-1,0) && IsEmptySpaceFrom(-1,1)) {
+                } else if (IsEmptySpaceFrom(-1, 0) && IsEmptySpaceFrom(-1, 1)) {
                     Move(-1, 1);
                 }
                 // if under a ledge, fall off of it
@@ -162,6 +154,17 @@ namespace falling_sand {
         public void Destroy() {
             SpatialMap[Game.GetGlobalFromPos(X, Y)] = null;
             isDestroyed = true;
+        }
+        private bool isFalling() {
+            int i = 1;
+            while (true) {
+                if (IsWallFrom(0, i)) return false;
+                if (IsEmptySpaceFrom(0, i)) return true;
+                Element? elem = GetElementFrom(0, i);
+                if (elem == null) return true;
+                if (!elem.Gravity) return false;
+                i++;
+            }
         }
     }
 }

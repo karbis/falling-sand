@@ -21,7 +21,7 @@ namespace falling_sand.Ui {
 
         public static void Init() {
             Timer updateTimer = new Timer();
-            updateTimer.Interval = 1000/20;
+            updateTimer.Interval = 1;
             updateTimer.Start();
             Game.DoubleBufferPanel(input);
             bool mouseDown = false;
@@ -68,20 +68,8 @@ namespace falling_sand.Ui {
                 lastUpdate = now;
                 Point hoverPoint = GetHoveringPoint(currentMousePos);
                 if (lastCoord == hoverPoint) return;
-                input.Invalidate();
+                Game.Canvas.Invalidate();
                 lastCoord = hoverPoint;
-            };
-            input.Paint += (object? sender, PaintEventArgs e) => {
-                //e.Graphics.Clear(Color.Transparent);
-                if (!IsMouseInCanvas()) return;
-                Pen pen = new Pen(Color.FromKnownColor(KnownColor.Control));
-                double coordsPerUnit = Game.GetCoordsPerUnit();
-                Point hoverPoint = GetHoveringPoint(currentMousePos);
-                Rectangle drawRect = new Rectangle(new Point((int)(hoverPoint.X*coordsPerUnit), (int)(hoverPoint.Y * coordsPerUnit)), Size.Empty);
-                drawRect.Width = (int)(coordsPerUnit * BrushSize);
-                drawRect.Height = (int)(coordsPerUnit * BrushSize);
-                e.Graphics.DrawRectangle(pen, drawRect);
-                pen.Dispose();
             };
         }
 
@@ -94,6 +82,17 @@ namespace falling_sand.Ui {
         static bool IsMouseInCanvas() {
             Point realMousePos = new Point(Cursor.Position.X - 8 - FallingSand.Form.DesktopLocation.X, Cursor.Position.Y - 31 - FallingSand.Form.DesktopLocation.Y);
             return new Rectangle(Game.Canvas.Location, Game.Canvas.Size).Contains(realMousePos);
+        }
+        public static void PaintOnBrush(PaintEventArgs e) {
+            if (!IsMouseInCanvas()) return;
+            Pen pen = new Pen(Color.FromKnownColor(KnownColor.Control));
+            double coordsPerUnit = Game.GetCoordsPerUnit();
+            Point hoverPoint = GetHoveringPoint(currentMousePos);
+            Rectangle drawRect = new Rectangle(new Point((int)(hoverPoint.X * coordsPerUnit), (int)(hoverPoint.Y * coordsPerUnit)), Size.Empty);
+            drawRect.Width = (int)(coordsPerUnit * BrushSize);
+            drawRect.Height = (int)(coordsPerUnit * BrushSize);
+            e.Graphics.DrawRectangle(pen, drawRect);
+            pen.Dispose();
         }
     }
 }
