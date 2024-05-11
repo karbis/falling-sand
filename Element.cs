@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -85,10 +84,11 @@ namespace falling_sand {
                         continue;
                     }
                     if (IsEmptySpaceFrom(steps, 1)) {
-                        Move(steps, 1);
+                        Move(steps, 0);
                         break;
                     }
                 }
+                Move(0, 1);
                 // liquid physics
             } else if (elem2 != null && !isFalling()) {
                 if (IsEmptySpaceFrom(1, 0) && IsEmptySpaceFrom(1, 1)) {
