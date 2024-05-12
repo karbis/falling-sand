@@ -1,4 +1,6 @@
 # Falling sand
 Falling sand simulator
 
-Idk what else to say
+# Controls
+Ctrl + Z - Undo
+Ctrl + Y - Redo
