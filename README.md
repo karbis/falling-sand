@@ -1,2 +1,6 @@
 # Falling sand
-idk
+Falling sand simulator
+
+# Controls
+- Ctrl + Z - Undo
+- Ctrl + Y - Redo
