@@ -8,7 +8,7 @@ namespace falling_sand.Elements {
     internal class Virus : Element {
         public Virus() {
             SelectionBarOrder = 6;
-            ElementColorFunction = Ui.Game.GenerateColorMap(51605, .75, Color.Gray, Color.Red);
+            ElementColorFunction = GenerateColorMap(51605, .75, Color.FromArgb(150,150,150), Color.Red);
             Flammable = true;
             Description = "Slowly spreads as time goes on";
         }
@@ -20,7 +20,13 @@ namespace falling_sand.Elements {
             timer = 0;
             foreach (int[] neighbor in Ui.Game.SideNeighbors) {
                 if (Random.Shared.NextDouble() < .25) continue; // variety
-                if (!IsEmptySpaceFrom(neighbor[0], neighbor[1])) continue;
+                if (IsWallFrom(neighbor[0], neighbor[1])) continue;
+                Element? elem = GetElementFrom(neighbor[0], neighbor[1]);
+                if (elem != null) {
+                    if (elem.Liquid) {
+                        elem.Destroy();
+                    } else continue;
+                };
                 Virus virus = new Virus();
                 virus.X = X + neighbor[0];
                 virus.Y = Y + neighbor[1];

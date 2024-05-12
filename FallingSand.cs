@@ -13,7 +13,7 @@ namespace falling_sand
             ElementSelectorBar.FillElements(Elements);
             BrushGame.Init();
             ElementSelection.UpdateAll();
-            SelectedDisplayPanel.Update();
+            SelectedDisplay.Update();
             Buttons.Init();
         }
     }

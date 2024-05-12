@@ -9,6 +9,8 @@ namespace falling_sand.Elements {
         public Fire() {
             ElementColor = Color.OrangeRed;
             SelectionBarOrder = 2;
+            ElementColorFunction = GenerateColorMap(7163, .6, Color.OrangeRed, Color.Red);
+            Hot = true;
         }
         int Timer = 0;
         public override void Update() {

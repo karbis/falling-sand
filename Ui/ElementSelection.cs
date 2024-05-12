@@ -38,9 +38,13 @@ namespace falling_sand {
 
         public static PaintEventHandler SetPaintToElement(Element element, Control control) {
             PaintEventHandler handler = (object? sender, PaintEventArgs e) => {
+                if (element.ElementImage != null || element.ElementColorFunction == null) {
+                    Game.PaintElement(e.Graphics, element, control.Width, 0, 0);
+                    return;
+                }
                 for (int x = 0; x < 8; x++) {
                     for (int y = 0; y < 8; y++) {
-                        Ui.Game.PaintElement(e.Graphics, element, control.Width / 8d, x, y);
+                        Game.PaintElement(e.Graphics, element, control.Width / 8f, x, y);
                     }
                 }
             };

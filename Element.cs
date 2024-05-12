@@ -13,6 +13,7 @@ namespace falling_sand {
         public Color ElementColor;
         public delegate Color ColorFunction(int x, int y);
         public ColorFunction? ElementColorFunction;
+        public Bitmap? ElementImage;
         private int _x = 0;
         private int _y = 0;
         public int X {
@@ -31,13 +32,15 @@ namespace falling_sand {
         }
 
         public static List<Element?> SpatialMap = [];
-        private bool isDestroyed = false;
-        private bool ignoreLiquidUpdates = false;
+        public bool isDestroyed = false;
+        internal bool ignoreLiquidUpdates = false;
         public int SelectionBarOrder = 0;
 
         public bool Flammable = false;
         public bool Gravity = false;
         public bool Liquid = false;
+        public bool Invincible = false;
+        public bool Hot = false;
 
         public Element() {
             Name = GetType().Name;
@@ -116,7 +119,7 @@ namespace falling_sand {
             // if gravity object above liquid, move water up
         }
 
-        private void updateSpatialMap(int newX, int newY) {
+        protected internal void updateSpatialMap(int newX, int newY) {
             if (isDestroyed) return;
             int curPos = Game.GetGlobalFromPos(X, Y);
             int newPos = Game.GetGlobalFromPos(newX, newY);
@@ -141,7 +144,13 @@ namespace falling_sand {
             return GetElementByCoords(X + x, Y + y);
         }
         public static Element? GetElementByCoords(int x, int y) {
+            if (IsWall(x, y)) return null;
             return SpatialMap.ElementAtOrDefault(Game.GetGlobalFromPos(x, y));
+        }
+        public Element? GetElementOfType(string name, int x, int y) {
+            Element? elem = GetElementFrom(x, y);
+            if (elem == null || elem.Name != name) return null;
+            return elem;
         }
         public static bool IsWall(int x, int y) {
             return x < 0 || y < 0 || x > Game.GameSize.Width - 1 || y > Game.GameSize.Height - 1;
@@ -155,12 +164,20 @@ namespace falling_sand {
         public static bool IsEmptySpace(int x, int y) {
             return GetElementByCoords(x, y) == null && !IsWall(x, y);
         }
+        public bool IsTouchingHotElement(int[][]? neighbors = null) {
+            neighbors ??= Game.SideNeighbors;
+            foreach (int[] n in neighbors) {
+                Element? elem = GetElementFrom(n[0], n[1]);
+                if (elem != null && elem.Hot) return true;
+            }
+            return false;
+        }
 
         public void Destroy() {
             SpatialMap[Game.GetGlobalFromPos(X, Y)] = null;
             isDestroyed = true;
         }
-        private bool isFalling() {
+        internal bool isFalling() {
             int i = 1;
             while (true) {
                 if (IsWallFrom(0, i)) return false;
@@ -168,10 +185,25 @@ namespace falling_sand {
                 Element? elem = GetElementFrom(0, i);
                 if (elem == null) return true;
                 Element? elem2 = GetElementFrom(0, i + 1);
-                if (elem.Gravity && elem2 != null && !elem2.Gravity) return true;
+                //if (elem.Gravity && elem2 != null && !elem2.Gravity) return true;
                 if (!elem.Gravity) return false;
                 i++;
             }
+        }
+
+        static Dictionary<int, Color[]> colorMapCache = [];
+        public static ColorFunction GenerateColorMap(int seed, double frequency, Color mainColor, Color secondaryColor) {
+            const int colorMapSize = 24;
+            if (colorMapCache.GetValueOrDefault(seed) != null) {
+                return (int x, int y) => colorMapCache[seed][x % colorMapSize + y % colorMapSize * colorMapSize];
+            }
+            Random rand = new Random(seed);
+            Color[] colors = new Color[colorMapSize * colorMapSize];
+            for (int i = 0; i < colorMapSize * colorMapSize; i++) {
+                colors[i] = (rand.NextDouble() > frequency) ? secondaryColor : mainColor;
+            }
+            colorMapCache.Add(seed, colors);
+            return (int x, int y) => colors[x % colorMapSize + y % colorMapSize * colorMapSize];
         }
     }
 }

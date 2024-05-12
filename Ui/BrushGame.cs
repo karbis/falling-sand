@@ -18,6 +18,9 @@ namespace falling_sand.Ui {
         static Point currentMousePos = new Point();
         static public GameTool Tool = GameTool.Brush;
         const bool brushReplaces = true;
+        public static List<List<Element>> UndoHistory = [];
+        public static List<Element>? LastWaypoint;
+        public static int UndoIndex = 0;
 
         public static void Init() {
             Timer updateTimer = new Timer();
@@ -32,7 +35,7 @@ namespace falling_sand.Ui {
                 Point pos = GetHoveringPoint(currentMousePos);
                 for (int x = 0; x < BrushSize; x++) {
                     for (int y = 0; y < BrushSize; y++) {
-                        if (Element.IsWall(pos.X + x, pos.Y + y)) continue;
+                        //if (Element.IsWall(pos.X + x, pos.Y + y)) continue;
                         Element? erasedElem = Element.GetElementByCoords(pos.X + x, pos.Y + y);
                         if (Tool == GameTool.Brush && !Element.IsEmptySpace(pos.X + x, pos.Y + y)) {
                             if (!brushReplaces) continue;
@@ -46,8 +49,10 @@ namespace falling_sand.Ui {
                         }
                         Element? elem = (Element?)Activator.CreateInstance(Game.SelectedElement.GetType());
                         if (elem == null) return;
-                        elem.X = pos.X+x;
-                        elem.Y = pos.Y+y;
+                        elem.X = pos.X + x;
+                        elem.Y = pos.Y + y;
+                        if (LastWaypoint == null) continue;
+                        LastWaypoint.Add(elem);
                     }
                 }
             };
@@ -55,10 +60,22 @@ namespace falling_sand.Ui {
             input.MouseDown += (object? sender, MouseEventArgs e) => {
                 if (e.Button != MouseButtons.Left) return;
                 mouseDown = true;
+                LastWaypoint = new List<Element>();
             };
             input.MouseUp += (object? sender, MouseEventArgs e) => {
                 if (e.Button != MouseButtons.Left) return;
                 mouseDown = false;
+
+                if (LastWaypoint == null) return;
+                if (UndoIndex != 0) {
+                    UndoHistory.RemoveRange(0, UndoIndex);
+                }
+                UndoIndex = 0;
+                if (UndoHistory.Count > 75) {
+                    UndoHistory.RemoveAt(75);
+                }
+                UndoHistory.Insert(0, LastWaypoint);
+                LastWaypoint = null;
             };
             Point lastCoord = new Point(-1, -1);
             long lastUpdate = 0;
@@ -72,13 +89,23 @@ namespace falling_sand.Ui {
                 Game.Canvas.Invalidate();
                 lastCoord = hoverPoint;
             };
+
+            FallingSand.Form.KeyPreview = true;
+            FallingSand.Form.KeyDown += (object? handler, KeyEventArgs e) => {
+                if (!e.Control) return;
+                if (e.KeyCode == Keys.Z) {
+                    undo(1);
+                } else if (e.KeyCode == Keys.Y) {
+                    undo(-1);
+                }
+            };
         }
 
         public static Point GetHoveringPoint(Point loc) {
             double coordsPerUnit = Game.GetCoordsPerUnit();
             int x = (int)(loc.X / coordsPerUnit);
             int y = (int)(loc.Y / coordsPerUnit);
-            return new Point(x - BrushSize/2, y-BrushSize/2);
+            return new Point(x - BrushSize / 2, y - BrushSize / 2);
         }
         static bool IsMouseInCanvas() {
             Point realMousePos = new Point(Cursor.Position.X - 8 - FallingSand.Form.DesktopLocation.X, Cursor.Position.Y - 31 - FallingSand.Form.DesktopLocation.Y);
@@ -87,13 +114,31 @@ namespace falling_sand.Ui {
         public static void PaintOnBrush(PaintEventArgs e) {
             if (!IsMouseInCanvas()) return;
             Pen pen = new Pen(Color.FromKnownColor(KnownColor.Control));
-            double coordsPerUnit = Game.GetCoordsPerUnit();
+            float coordsPerUnit = Game.GetCoordsPerUnit();
             Point hoverPoint = GetHoveringPoint(currentMousePos);
-            Rectangle drawRect = new Rectangle(new Point((int)(hoverPoint.X * coordsPerUnit), (int)(hoverPoint.Y * coordsPerUnit)), Size.Empty);
-            drawRect.Width = (int)(coordsPerUnit * BrushSize);
-            drawRect.Height = (int)(coordsPerUnit * BrushSize);
+            RectangleF drawRect = new RectangleF(new PointF(hoverPoint.X * coordsPerUnit+.5f, hoverPoint.Y * coordsPerUnit+.5f), Size.Empty);
+            drawRect.Width = coordsPerUnit * BrushSize - .5f;
+            drawRect.Height = coordsPerUnit * BrushSize - .5f;
             e.Graphics.DrawRectangle(pen, drawRect);
             pen.Dispose();
+        }
+
+        static void undo(int amount) {
+            if (UndoIndex + amount > UndoHistory.Count || UndoIndex + amount < 0) return;
+            List<Element> waypoint = UndoHistory[UndoIndex + Math.Min(0,amount)];
+            for (int i = 0; i < waypoint.Count; i++) {
+                Element elem = waypoint[i];
+                if (!elem.isDestroyed) {
+                    elem.Destroy();
+                    continue;
+                }
+                Element? elemClone = (Element?)Activator.CreateInstance(elem.GetType());
+                if (elemClone == null) continue;
+                elemClone.X = elem.X;
+                elemClone.Y = elem.Y;
+                waypoint[i] = elemClone;
+            }
+            UndoIndex += amount;
         }
     }
 }

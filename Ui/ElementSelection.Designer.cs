@@ -29,6 +29,7 @@
             // 
             // Visual
             // 
+            Visual.BackColor = Color.DimGray;
             Visual.ForeColor = Color.Black;
             Visual.Location = new Point(4, 4);
             Visual.Name = "Visual";

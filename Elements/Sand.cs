@@ -10,9 +10,8 @@ namespace falling_sand.Elements {
         public Sand() {
             ElementColor = Color.Yellow;
             Gravity = true;
-            Flammable = true;
             SelectionBarOrder = 0;
-            ElementColorFunction = Ui.Game.GenerateColorMap(5476, .85, Color.Yellow, Color.FromArgb(255, 235, 0));
+            ElementColorFunction = GenerateColorMap(5476, .85, Color.Yellow, Color.FromArgb(255, 235, 0));
         }
     }
 }

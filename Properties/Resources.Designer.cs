@@ -113,6 +113,36 @@ namespace falling_sand.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap HotIcon {
+            get {
+                object obj = ResourceManager.GetObject("HotIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IceElement {
+            get {
+                object obj = ResourceManager.GetObject("IceElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IcicleElement {
+            get {
+                object obj = ResourceManager.GetObject("IcicleElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LiquidIcon {
             get {
                 object obj = ResourceManager.GetObject("LiquidIcon", resourceCulture);
@@ -156,6 +186,36 @@ namespace falling_sand.Properties {
         internal static System.Drawing.Bitmap SettingsIcon {
             get {
                 object obj = ResourceManager.GetObject("SettingsIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StoneElement {
+            get {
+                object obj = ResourceManager.GetObject("StoneElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TntElement {
+            get {
+                object obj = ResourceManager.GetObject("TntElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WoodElement {
+            get {
+                object obj = ResourceManager.GetObject("WoodElement", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

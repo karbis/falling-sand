@@ -14,12 +14,20 @@ namespace falling_sand.Ui {
         public static Size GameSize = new Size(30,30);
         public static bool Paused = false;
         public static int TickRate = 30;
+        public delegate void EmptyFunction();
+        public static List<EmptyFunction> OnUpdateHooks = [];
 
-        public static void PaintElement(Graphics g, Element element, double scale = 16, int x = 0, int y = 0) {
+        public static void PaintElement(Graphics g, Element element, float scale = 16, int x = 0, int y = 0) {
+            RectangleF pixelRect = new RectangleF(x * scale, y * scale, scale, scale);
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+            if (element.ElementImage != null) {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.DrawImage(element.ElementImage, pixelRect);
+                return;
+            }
             SolidBrush brush = new SolidBrush((element.ElementColorFunction != null) ? element.ElementColorFunction(x, y) : element.ElementColor);
-            double xPos = x * scale;
-            double yPos = y * scale;
-            g.FillRectangle(brush, new Rectangle((int)xPos, (int)yPos, (int)((x+1)*scale)-(int)xPos, (int)((y+1)*scale) - (int)yPos));
+            g.FillRectangle(brush, pixelRect);
             brush.Dispose();
         }
         public static void DoubleBufferPanel(Control panel) {
@@ -44,7 +52,7 @@ namespace falling_sand.Ui {
                 //e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
                 foreach (Element? elem in Element.SpatialMap) {
                     if (elem == null) continue;
-                    PaintElement(e.Graphics, elem, (double)Canvas.Width / GameSize.Width, elem.X, elem.Y);
+                    PaintElement(e.Graphics, elem, (float)Canvas.Width / GameSize.Width, elem.X, elem.Y);
                 }
                 BrushGame.PaintOnBrush(e);
             };
@@ -96,14 +104,24 @@ namespace falling_sand.Ui {
             };
         }
         public static void Update(int updateAmount = 1) {
-            List<Element?> shallowCopy = [];
-            foreach (Element? elem in Element.SpatialMap) {
+            Element?[] shallowCopy = new Element?[Element.SpatialMap.Count];
+            /*foreach (Element? elem in Element.SpatialMap) {
                 shallowCopy.Add(elem);
-            }
+            }*/
+            Element.SpatialMap.CopyTo(shallowCopy);
             foreach (Element? elem in shallowCopy) {
                 if (elem == null) continue;
                 for (int i = 0; i < updateAmount; i++) {
+                    if (elem == null || elem.isDestroyed) break;
                     elem.Update();
+                }
+            }
+            for (int i = 0; i < updateAmount; i++) {
+                if (OnUpdateHooks.Count == 0) break;
+                EmptyFunction[] hooks = new EmptyFunction[OnUpdateHooks.Count];
+                OnUpdateHooks.CopyTo(hooks);
+                foreach (EmptyFunction func in hooks) {
+                    func();
                 }
             }
             Canvas.Invalidate();
@@ -113,23 +131,8 @@ namespace falling_sand.Ui {
             Element.SpatialMap.Clear();
             Element.SpatialMap = Enumerable.Repeat((Element?)null, GameSize.Width * GameSize.Height).ToList();
         }
-        public static double GetCoordsPerUnit() {
-            return (double)Canvas.Width / GameSize.Width;
-        }
-
-        static Dictionary<int, Color[]> colorMapCache = [];
-        public static Element.ColorFunction GenerateColorMap(int seed, double frequency, Color mainColor, Color secondaryColor) {
-            const int colorMapSize = 24;
-            if (colorMapCache.GetValueOrDefault(seed) != null) {
-                return (int x, int y) => colorMapCache[seed][x % colorMapSize + y % colorMapSize * colorMapSize];
-            }
-            Random rand = new Random(seed);
-            Color[] colors = new Color[colorMapSize * colorMapSize];
-            for (int i = 0; i < colorMapSize * colorMapSize; i++) {
-                colors[i] = (rand.NextDouble() > frequency) ? secondaryColor : mainColor;
-            }
-            colorMapCache.Add(seed, colors);
-            return (int x, int y) => colors[x % colorMapSize + y % colorMapSize * colorMapSize];
+        public static float GetCoordsPerUnit() {
+            return (float)Canvas.Width / GameSize.Width;
         }
         public static readonly int[][] SideNeighbors = [[1,0],[0,1],[-1,0],[0,-1]];
     }

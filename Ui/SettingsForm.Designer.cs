@@ -106,7 +106,7 @@
             // SpeedInput
             // 
             SpeedInput.DecimalPlaces = 2;
-            SpeedInput.Increment = new decimal(new int[] { 25, 0, 0, 131072 });
+            SpeedInput.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
             SpeedInput.Location = new Point(287, 38);
             SpeedInput.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
             SpeedInput.Minimum = new decimal(new int[] { 3, 0, 0, 131072 });
@@ -151,7 +151,7 @@
             label7.Name = "label7";
             label7.Size = new Size(48, 15);
             label7.TabIndex = 10;
-            label7.Text = "Beta 1.1";
+            label7.Text = "Beta 1.2";
             // 
             // Cancel
             // 

@@ -34,9 +34,9 @@ namespace falling_sand.Ui {
                 AddText("•");
                 AddText(selectedElement.Description);
             }
-            bool[] lookForBools = [selectedElement.Gravity && !selectedElement.Liquid, selectedElement.Flammable, selectedElement.Liquid];
-            Bitmap[] lookForIcons = [Resources.GravityIcon, Resources.FlammableIcon, Resources.LiquidIcon];
-            string[] lookForNames = ["Gravity","Flammable", "Liquid"];
+            bool[] lookForBools = [selectedElement.Gravity && !selectedElement.Liquid, selectedElement.Flammable, selectedElement.Liquid, selectedElement.Hot];
+            Bitmap[] lookForIcons = [Resources.GravityIcon, Resources.FlammableIcon, Resources.LiquidIcon, Resources.HotIcon];
+            string[] lookForNames = ["Gravity","Flammable", "Liquid","Hot"];
             bool addedDash = false;
             for (int i = 0; i < lookForBools.Length; i++) {
                 if (!lookForBools[i]) continue;

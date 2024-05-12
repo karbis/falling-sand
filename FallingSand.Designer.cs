@@ -48,7 +48,7 @@
             Canvas.Controls.Add(CanvasInput);
             Canvas.Location = new Point(0, 0);
             Canvas.Name = "Canvas";
-            Canvas.Size = new Size(450, 450);
+            Canvas.Size = new Size(467, 467);
             Canvas.TabIndex = 0;
             // 
             // CanvasInput
@@ -56,7 +56,7 @@
             CanvasInput.BackColor = Color.Transparent;
             CanvasInput.Location = new Point(0, 0);
             CanvasInput.Name = "CanvasInput";
-            CanvasInput.Size = new Size(450, 450);
+            CanvasInput.Size = new Size(467, 467);
             CanvasInput.TabIndex = 1;
             // 
             // FPSCounter
@@ -64,7 +64,7 @@
             FPSCounter.BackColor = Color.Transparent;
             FPSCounter.Font = new Font("Consolas", 10F);
             FPSCounter.ForeColor = Color.Black;
-            FPSCounter.Location = new Point(360, 98);
+            FPSCounter.Location = new Point(377, 98);
             FPSCounter.Name = "FPSCounter";
             FPSCounter.Size = new Size(80, 17);
             FPSCounter.TabIndex = 0;
@@ -75,9 +75,9 @@
             // 
             BottomBar.BackColor = SystemColors.ControlDarkDark;
             BottomBar.Controls.Add(BottomCenterBar);
-            BottomBar.Location = new Point(0, 450);
+            BottomBar.Location = new Point(0, 467);
             BottomBar.Name = "BottomBar";
-            BottomBar.Size = new Size(450, 125);
+            BottomBar.Size = new Size(467, 125);
             BottomBar.TabIndex = 2;
             // 
             // BottomCenterBar
@@ -94,13 +94,13 @@
             BottomCenterBar.Controls.Add(Elements);
             BottomCenterBar.Location = new Point(0, 0);
             BottomCenterBar.Name = "BottomCenterBar";
-            BottomCenterBar.Size = new Size(450, 125);
+            BottomCenterBar.Size = new Size(467, 125);
             BottomCenterBar.TabIndex = 1;
             // 
             // SettingsButton
             // 
             SettingsButton.Image = Properties.Resources.SettingsIcon;
-            SettingsButton.Location = new Point(417, 38);
+            SettingsButton.Location = new Point(434, 38);
             SettingsButton.Name = "SettingsButton";
             SettingsButton.Size = new Size(23, 23);
             SettingsButton.TabIndex = 8;
@@ -110,7 +110,7 @@
             // 
             PlayButton.Image = Properties.Resources.PauseIcon;
             PlayButton.ImageAlign = ContentAlignment.MiddleLeft;
-            PlayButton.Location = new Point(338, 66);
+            PlayButton.Location = new Point(355, 66);
             PlayButton.Name = "PlayButton";
             PlayButton.Size = new Size(64, 23);
             PlayButton.TabIndex = 7;
@@ -122,7 +122,7 @@
             // 
             BrushSizeButton.Image = Properties.Resources.ResizeIcon;
             BrushSizeButton.ImageAlign = ContentAlignment.MiddleLeft;
-            BrushSizeButton.Location = new Point(300, 38);
+            BrushSizeButton.Location = new Point(317, 38);
             BrushSizeButton.Name = "BrushSizeButton";
             BrushSizeButton.Size = new Size(112, 23);
             BrushSizeButton.TabIndex = 6;
@@ -133,7 +133,7 @@
             // ClearButton
             // 
             ClearButton.ImageAlign = ContentAlignment.MiddleLeft;
-            ClearButton.Location = new Point(397, 10);
+            ClearButton.Location = new Point(414, 10);
             ClearButton.Name = "ClearButton";
             ClearButton.Size = new Size(43, 23);
             ClearButton.TabIndex = 5;
@@ -145,7 +145,7 @@
             ToolButton.Font = new Font("Segoe UI", 9F);
             ToolButton.Image = Properties.Resources.BrushIcon;
             ToolButton.ImageAlign = ContentAlignment.MiddleLeft;
-            ToolButton.Location = new Point(300, 10);
+            ToolButton.Location = new Point(317, 10);
             ToolButton.Name = "ToolButton";
             ToolButton.Size = new Size(92, 23);
             ToolButton.TabIndex = 4;
@@ -165,6 +165,7 @@
             // 
             // SelectedDisplayPanel
             // 
+            SelectedDisplayPanel.BackColor = Color.Black;
             SelectedDisplayPanel.BorderStyle = BorderStyle.FixedSingle;
             SelectedDisplayPanel.Location = new Point(10, 96);
             SelectedDisplayPanel.Name = "SelectedDisplayPanel";
@@ -177,7 +178,7 @@
             Elements.BackColor = Color.Silver;
             Elements.Location = new Point(10, 10);
             Elements.Name = "Elements";
-            Elements.Size = new Size(280, 80);
+            Elements.Size = new Size(297, 80);
             Elements.TabIndex = 1;
             // 
             // FallingSand
@@ -185,11 +186,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.WindowFrame;
-            ClientSize = new Size(450, 575);
+            ClientSize = new Size(467, 592);
             Controls.Add(BottomBar);
             Controls.Add(Canvas);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(466, 164);
+            MinimumSize = new Size(483, 164);
             Name = "FallingSand";
             Text = "Falling sand";
             Canvas.ResumeLayout(false);

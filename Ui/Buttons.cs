@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace falling_sand.Ui {
     internal class Buttons {
         static FallingSand form = FallingSand.Form;
-        static int[] brushSizes = [1, 3, 5,7];
+        static int[] brushSizes = [1,3,5,7,9];
         static int brushIndex = 0;
         public static void Init() {
             IncrementBrushSize(0);
@@ -34,6 +34,10 @@ namespace falling_sand.Ui {
             form.ClearButton.MouseClick += (object? handler, MouseEventArgs e) => {
                 Game.FillSpatialMap();
                 form.Canvas.Focus();
+
+                BrushGame.UndoHistory.Clear();
+                BrushGame.LastWaypoint = null;
+                BrushGame.UndoIndex = 0;
             };
 
             form.PlayButton.MouseClick += (object? handler, MouseEventArgs e) => {

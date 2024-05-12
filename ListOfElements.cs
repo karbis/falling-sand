@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using falling_sand.Elements;
 
 namespace falling_sand {
     public class ListOfElements {
@@ -25,5 +26,6 @@ namespace falling_sand {
                 return list;
             }
         }
+        //public static Element[] List = [new Sand(), new Stone(), new Fire(), new Water(), new Plant(), new Virus()];
     }
 }

@@ -18,9 +18,8 @@ namespace falling_sand.Elements {
             base.Update();
             if (isGrown) return;
             foreach (int[] neighborPair in Ui.Game.SideNeighbors) {
-                Element? elem = GetElementFrom(neighborPair[0], neighborPair[1]);
+                Element? elem = GetElementOfType("Water",neighborPair[0], neighborPair[1]);
                 if (elem == null) continue;
-                if (elem.Name != "Water") continue;
                 isGrown = true;
                 ElementColor = Color.FromArgb(50, 165, 40);
                 elem.Destroy();

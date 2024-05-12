@@ -9,6 +9,7 @@ namespace falling_sand.Elements {
         public Stone() {
             ElementColor = Color.Gray;
             SelectionBarOrder = 1;
+            ElementImage = Properties.Resources.StoneElement;
         }
     }
 }
