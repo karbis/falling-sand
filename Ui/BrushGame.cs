@@ -41,10 +41,16 @@ namespace falling_sand.Ui {
                             if (!brushReplaces) continue;
                             if (erasedElem == null) continue;
                             erasedElem.Destroy();
+                            if (LastWaypoint != null) {
+                                LastWaypoint.Remove(erasedElem);
+                            }
                         }
                         if (Tool == GameTool.Eraser) {
                             if (erasedElem == null) continue;
                             erasedElem.Destroy();
+                            if (LastWaypoint != null) {
+                                LastWaypoint.Add(erasedElem);
+                            }
                             continue;
                         }
                         Element? elem = (Element?)Activator.CreateInstance(Game.SelectedElement.GetType());
@@ -67,6 +73,7 @@ namespace falling_sand.Ui {
                 mouseDown = false;
 
                 if (LastWaypoint == null) return;
+                if (LastWaypoint.Count == 0) return;
                 if (UndoIndex != 0) {
                     UndoHistory.RemoveRange(0, UndoIndex);
                 }

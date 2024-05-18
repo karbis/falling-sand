@@ -8,7 +8,7 @@ namespace falling_sand.Elements {
     public class Wood : Element {
         public Wood() {
             Flammable = true;
-            ElementImage = Properties.Resources.WoodElement;
+            ElementImage = "Wood";
             SelectionBarOrder = 9;
         }
     }

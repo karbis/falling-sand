@@ -10,6 +10,7 @@ namespace falling_sand.Elements {
             SelectionBarOrder = 12;
             Description = "Elevates up";
             ElementColor = Color.FromArgb(235, 235, 235);
+            //Gravity = true;
         }
 
         public override void Update() {

@@ -42,7 +42,7 @@ namespace falling_sand.Ui {
             GameSizeHeight.Value = Game.GameSize.Height;
 
             updateSpeedBar();
-            SpeedInput.Value = (decimal)(Game.TickRate / 30d);
+            SpeedInput.Value = Math.Clamp((decimal)(Game.TickRate / 30d), SpeedInput.Minimum, SpeedInput.Maximum);
         }
 
         void updateSpeedBar() {

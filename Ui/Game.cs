@@ -1,8 +1,10 @@
-﻿using System;
+﻿using falling_sand.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using Timer = System.Windows.Forms.Timer;
@@ -17,13 +19,25 @@ namespace falling_sand.Ui {
         public delegate void EmptyFunction();
         public static List<EmptyFunction> OnUpdateHooks = [];
 
+        static Dictionary<string, Bitmap> images = new Dictionary<string, Bitmap> {
+            { "Ice", Resources.IceElement },
+            { "Icicle", Resources.IcicleElement },
+            { "Tnt", Resources.TntElement },
+            { "Stone", Resources.StoneElement },
+            { "Wood", Resources.WoodElement },
+            {"Obsidian", Resources.ObsidianElement },
+            {"Termite", Resources.TermiteElement },
+            {"Sponge", Resources.SpongeElement },
+            {"WetSponge", Resources.WetSpongeElement },
+            {"BlackHole", Resources.BlackHoleElement }
+        };
         public static void PaintElement(Graphics g, Element element, float scale = 16, int x = 0, int y = 0) {
             RectangleF pixelRect = new RectangleF(x * scale, y * scale, scale, scale);
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
             if (element.ElementImage != null) {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                g.DrawImage(element.ElementImage, pixelRect);
+                g.DrawImage(images[element.ElementImage], pixelRect);
                 return;
             }
             SolidBrush brush = new SolidBrush((element.ElementColorFunction != null) ? element.ElementColorFunction(x, y) : element.ElementColor);
@@ -71,12 +85,13 @@ namespace falling_sand.Ui {
             double leftOverSeconds = 0;
             timer.Tick += (object? sender, EventArgs e) => {
                 if (stopwatch.ElapsedMilliseconds - lastElapsed + leftOverSeconds < 1000d / TickRate) return;
-                if (Paused) {
-                    Canvas.Invalidate();
-                    return;
-                }
                 leftOverSeconds += stopwatch.ElapsedMilliseconds - lastElapsed;
                 lastElapsed = stopwatch.ElapsedMilliseconds;
+                if (Paused) {
+                    Canvas.Invalidate();
+                    leftOverSeconds = 0;
+                    return;
+                }
 
                 int updateAmount = (int)(leftOverSeconds / 1000d * TickRate);
                 updateAmount = Math.Min(10, updateAmount);
@@ -104,12 +119,7 @@ namespace falling_sand.Ui {
             };
         }
         public static void Update(int updateAmount = 1) {
-            Element?[] shallowCopy = new Element?[Element.SpatialMap.Count];
-            /*foreach (Element? elem in Element.SpatialMap) {
-                shallowCopy.Add(elem);
-            }*/
-            Element.SpatialMap.CopyTo(shallowCopy);
-            foreach (Element? elem in shallowCopy) {
+            foreach (Element? elem in (Element?[])Element.SpatialMap.Clone()) {
                 if (elem == null) continue;
                 for (int i = 0; i < updateAmount; i++) {
                     if (elem == null || elem.isDestroyed) break;
@@ -128,8 +138,10 @@ namespace falling_sand.Ui {
         }
 
         public static void FillSpatialMap() {
-            Element.SpatialMap.Clear();
-            Element.SpatialMap = Enumerable.Repeat((Element?)null, GameSize.Width * GameSize.Height).ToList();
+            Array.Clear(Element.SpatialMap);
+            Element.SpatialMap = new Element?[GameSize.Width*GameSize.Height];
+            OnUpdateHooks.Clear();
+            OnUpdateHooks.TrimExcess();
         }
         public static float GetCoordsPerUnit() {
             return (float)Canvas.Width / GameSize.Width;

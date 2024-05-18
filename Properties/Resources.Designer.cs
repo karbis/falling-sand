@@ -63,6 +63,16 @@ namespace falling_sand.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BlackHoleElement {
+            get {
+                object obj = ResourceManager.GetObject("BlackHoleElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BrushIcon {
             get {
                 object obj = ResourceManager.GetObject("BrushIcon", resourceCulture);
@@ -143,9 +153,29 @@ namespace falling_sand.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap InvincibleIcon {
+            get {
+                object obj = ResourceManager.GetObject("InvincibleIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LiquidIcon {
             get {
                 object obj = ResourceManager.GetObject("LiquidIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ObsidianElement {
+            get {
+                object obj = ResourceManager.GetObject("ObsidianElement", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,6 +223,16 @@ namespace falling_sand.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SpongeElement {
+            get {
+                object obj = ResourceManager.GetObject("SpongeElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap StoneElement {
             get {
                 object obj = ResourceManager.GetObject("StoneElement", resourceCulture);
@@ -203,9 +243,29 @@ namespace falling_sand.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TermiteElement {
+            get {
+                object obj = ResourceManager.GetObject("TermiteElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TntElement {
             get {
                 object obj = ResourceManager.GetObject("TntElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WetSpongeElement {
+            get {
+                object obj = ResourceManager.GetObject("WetSpongeElement", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

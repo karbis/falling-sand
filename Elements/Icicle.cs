@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace falling_sand.Elements {
         public Icicle() {
             SelectionBarOrder = 13;
             Description = "Shatters upon touching the ground";
-            ElementImage = Properties.Resources.IcicleElement;
+            ElementImage = "Icicle";
             Gravity = true;
             Flammable = true;
         }
@@ -30,6 +31,7 @@ namespace falling_sand.Elements {
                 Move(0, 1);
                 return;
             }
+            if (IsTouchingHotElement()) return;
             Destroy();
             if (!IsEmptySpaceFrom(0, -1)) return;
             void createWater(int x, int y) {
@@ -37,7 +39,7 @@ namespace falling_sand.Elements {
                 water.X = X + x;
                 water.Y = Y + y;
             }
-            if (IsEmptySpaceFrom(1,-1)) {
+            if (IsEmptySpaceFrom(1, -1)) {
                 createWater(1, -1);
             }
             if (IsEmptySpaceFrom(-1, -1)) {

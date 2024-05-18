@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,9 +33,10 @@ namespace falling_sand.Ui {
                 AddText("•");
                 AddText(selectedElement.Description);
             }
-            bool[] lookForBools = [selectedElement.Gravity && !selectedElement.Liquid, selectedElement.Flammable, selectedElement.Liquid, selectedElement.Hot];
-            Bitmap[] lookForIcons = [Resources.GravityIcon, Resources.FlammableIcon, Resources.LiquidIcon, Resources.HotIcon];
-            string[] lookForNames = ["Gravity","Flammable", "Liquid","Hot"];
+            bool[] lookForBools = [selectedElement.Gravity && !selectedElement.Liquid, selectedElement.Flammable, selectedElement.Liquid, selectedElement.Hot,
+                                    selectedElement.Invincible];
+            Bitmap[] lookForIcons = [Resources.GravityIcon, Resources.FlammableIcon, Resources.LiquidIcon, Resources.HotIcon, Resources.InvincibleIcon];
+            string[] lookForNames = ["Gravity","Flammable", "Liquid","Hot", "Unbreakable"];
             bool addedDash = false;
             for (int i = 0; i < lookForBools.Length; i++) {
                 if (!lookForBools[i]) continue;

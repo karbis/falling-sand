@@ -109,7 +109,7 @@
             SpeedInput.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
             SpeedInput.Location = new Point(287, 38);
             SpeedInput.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
-            SpeedInput.Minimum = new decimal(new int[] { 3, 0, 0, 131072 });
+            SpeedInput.Minimum = new decimal(new int[] { 4, 0, 0, 131072 });
             SpeedInput.Name = "SpeedInput";
             SpeedInput.Size = new Size(50, 23);
             SpeedInput.TabIndex = 6;

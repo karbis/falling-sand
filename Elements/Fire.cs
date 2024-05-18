@@ -20,7 +20,18 @@ namespace falling_sand.Elements {
                 Destroy();
                 return;
             }
-            if (Timer != 1) return;
+
+            void gravityCheck() {
+                Element? elem = GetElementFrom(0, -1);
+                if (elem != null && elem.Gravity) {
+                    Destroy();
+                }
+            }
+
+            if (Timer != 1) {
+                gravityCheck();
+                return;
+            };
             foreach (int[] neighborPair in Ui.Game.SideNeighbors) {
                 if (IsWallFrom(neighborPair[0], neighborPair[1])) continue;
                 Element? elem = GetElementFrom(neighborPair[0], neighborPair[1]);
@@ -31,6 +42,7 @@ namespace falling_sand.Elements {
                 fire.X = X + neighborPair[0];
                 fire.Y = Y + neighborPair[1];
             }
+            gravityCheck();
         }
     }
 }

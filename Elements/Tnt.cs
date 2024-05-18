@@ -9,7 +9,7 @@ namespace falling_sand.Elements {
     public class Tnt : Element {
         public Tnt() {
             SelectionBarOrder = 7;
-            ElementImage = Properties.Resources.TntElement;
+            ElementImage = "Tnt";
             Description = "Explodes when interacted with fire";
             Name = "TNT";
         }

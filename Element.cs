@@ -13,7 +13,7 @@ namespace falling_sand {
         public Color ElementColor;
         public delegate Color ColorFunction(int x, int y);
         public ColorFunction? ElementColorFunction;
-        public Bitmap? ElementImage;
+        public string? ElementImage;
         private int _x = 0;
         private int _y = 0;
         public int X {
@@ -31,7 +31,7 @@ namespace falling_sand {
             get { return _y; }
         }
 
-        public static List<Element?> SpatialMap = [];
+        public static Element?[] SpatialMap = [];
         public bool isDestroyed = false;
         internal bool ignoreLiquidUpdates = false;
         public int SelectionBarOrder = 0;
@@ -184,7 +184,7 @@ namespace falling_sand {
                 if (IsEmptySpaceFrom(0, i)) return true;
                 Element? elem = GetElementFrom(0, i);
                 if (elem == null) return true;
-                Element? elem2 = GetElementFrom(0, i + 1);
+                //Element? elem2 = GetElementFrom(0, i + 1);
                 //if (elem.Gravity && elem2 != null && !elem2.Gravity) return true;
                 if (!elem.Gravity) return false;
                 i++;

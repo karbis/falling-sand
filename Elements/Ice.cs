@@ -8,7 +8,7 @@ namespace falling_sand.Elements {
     public class Ice : Element {
         public Ice() {
             SelectionBarOrder = 10;
-            ElementImage = Properties.Resources.IceElement;
+            ElementImage = "Ice";
             Description = "Melts when interacted with fire";
         }
         public override void Update() {

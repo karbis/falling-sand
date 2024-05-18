@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace falling_sand.Elements {
-    public class Stone : Element {
-        public Stone() {
-            ElementColor = Color.Gray;
-            SelectionBarOrder = 1;
-            ElementImage = "Stone";
+    public class Obsidian : Element {
+        public Obsidian() {
+            Invincible = true;
+            SelectionBarOrder = 14;
+            ElementImage = "Obsidian";
         }
     }
 }
