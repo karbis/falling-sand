@@ -29,7 +29,9 @@ namespace falling_sand.Ui {
             {"Termite", Resources.TermiteElement },
             {"Sponge", Resources.SpongeElement },
             {"WetSponge", Resources.WetSpongeElement },
-            {"BlackHole", Resources.BlackHoleElement }
+            {"BlackHole", Resources.BlackHoleElement },
+            {"Snowflake", Resources.SnowflakeElement },
+            {"Candle", Resources.CandleElement }
         };
         public static void PaintElement(Graphics g, Element element, float scale = 16, int x = 0, int y = 0) {
             RectangleF pixelRect = new RectangleF(x * scale, y * scale, scale, scale);

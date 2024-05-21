@@ -149,9 +149,9 @@
             label7.ForeColor = SystemColors.ControlDarkDark;
             label7.Location = new Point(10, 108);
             label7.Name = "label7";
-            label7.Size = new Size(48, 15);
+            label7.Size = new Size(28, 15);
             label7.TabIndex = 10;
-            label7.Text = "Beta 1.2";
+            label7.Text = "v1.0";
             // 
             // Cancel
             // 

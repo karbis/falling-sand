@@ -83,6 +83,16 @@ namespace falling_sand.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CandleElement {
+            get {
+                object obj = ResourceManager.GetObject("CandleElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ClearIcon {
             get {
                 object obj = ResourceManager.GetObject("ClearIcon", resourceCulture);
@@ -216,6 +226,16 @@ namespace falling_sand.Properties {
         internal static System.Drawing.Bitmap SettingsIcon {
             get {
                 object obj = ResourceManager.GetObject("SettingsIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SnowflakeElement {
+            get {
+                object obj = ResourceManager.GetObject("SnowflakeElement", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
