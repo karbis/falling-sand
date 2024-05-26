@@ -25,7 +25,7 @@ namespace falling_sand.Elements {
                     stone.Y = elem.Y;
                     continue;
                 }
-                if ((!elem.Flammable && !elem.Gravity) || elem.Name == Name) continue;
+                if ((!elem.Flammable && !elem.Gravity) || elem.Name == Name || elem.Name == "Acid") continue;
                 elem.Destroy();
                 Fire fire = new Fire();
                 fire.X = elem.X;
